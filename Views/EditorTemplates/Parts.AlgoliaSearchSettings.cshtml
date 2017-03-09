@@ -1,0 +1,28 @@
+﻿@model Lombiq.Hosting.AlgoliaSearch.Models.AlgoliaSearchSettingsPart
+
+<fieldset>
+    <ol>
+        <li>
+            @Html.LabelFor(m => m.AdminApiKey, T("Admin API Key"))
+            @Html.Password("AdminApiKey")
+            @Html.ValidationMessageFor(m => m.AdminApiKey)
+            @Html.Hint(T("You can find your application-specific Admin API Key on the <a href=\"https://www.algolia.com/api-keys\">Algolia dashboard</a>."))
+        </li>
+
+        <li>
+            @Html.LabelFor(m => m.SearchOnlyApiKey, T("Search-Only API Key"))
+            @Html.TextBoxFor(m=>m.SearchOnlyApiKey)
+            @Html.ValidationMessageFor(m => m.SearchOnlyApiKey)
+            @Html.Hint(T("You can find your application-specific Search-Only API Key on the <a href=\"https://www.algolia.com/api-keys\">Algolia dashboard</a>."))
+        </li>
+
+        <li>
+            @Html.LabelFor(m => m.ApplicationId, T("Application ID"))
+            @Html.TextBoxFor(m => m.ApplicationId)
+            @Html.ValidationMessageFor(m => m.ApplicationId)
+            @Html.Hint(T("You can find your Application ID on the <a href=\"https://www.algolia.com/api-keys\">Algolia dashboard</a>."))
+        </li>
+    </ol>
+</fieldset>
+
+@T("If you don't have an Algolia account yet, click <a href=\"https://www.algolia.com/users/sign_up?utm_source=lombiq\">here to register one and start using Algolia hosted search</a>.")

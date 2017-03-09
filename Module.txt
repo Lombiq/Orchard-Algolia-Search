@@ -1,0 +1,12 @@
+﻿Name: Hosting - Algolia Search
+AntiForgery: enabled
+Author: Lombiq
+Website: http://lombiq.com
+Version: 1.0
+OrchardVersion: 1.10.1
+Description: An https://www.algolia.com/ search implementation.
+Features:
+    Lombiq.Hosting.AlgoliaSearch:
+        Description: An https://www.algolia.com/ search implementation.
+        Dependencies: Orchard.Fields, Orchard.Indexing, Orchard.Search, Piedone.HelpfulLibraries.Contents
+        Category: Search

@@ -1,0 +1,91 @@
+﻿@using Lombiq.Hosting.AlgoliaSearch.Services
+@using Orchard.Search.Models
+@using Orchard.ContentManagement
+
+@{
+    Style.Require("InstantSearch");
+    Script.Require("InstantSearch");
+
+    var searchSettings = WorkContext.CurrentSite.As<SearchSettingsPart>();
+    var searchFormPart = (SearchFormPart)Model.ContentPart;
+    var indexName = searchFormPart.OverrideIndex && !string.IsNullOrEmpty(searchFormPart.SelectedIndex)
+        ? searchFormPart.SelectedIndex
+        : searchSettings.SearchIndex;
+
+    var algoliaManager = WorkContext.Resolve<IAlgoliaManager>();
+    var searchOnlyApiKey = algoliaManager.GetSearchOnlyApiKey();
+    var applicationId = algoliaManager.GetApplicationId();
+
+    var searchBoxWidgetId = "search-box-widget-" + searchFormPart.Id;
+    var hitsWidgetId = "hits-widget-" + searchFormPart.Id;
+    var paginationWidgetId = "pagination-widget-" + searchFormPart.Id;
+    var paginationWidgetContainerId = "pagination-widget-container-" + searchFormPart.Id;
+}
+
+@if (!string.IsNullOrEmpty(indexName) && !string.IsNullOrEmpty(searchOnlyApiKey) && !string.IsNullOrEmpty(applicationId))
+{
+    <input type="text" id="@searchBoxWidgetId" />
+    <div id="@hitsWidgetId"></div>
+    <div id="@paginationWidgetContainerId">
+        <div id="@paginationWidgetId"></div>
+    </div>
+
+    using (Script.Foot())
+    {
+        <script type="text/javascript">
+            ; (function ($) {
+                $(function () {
+                    var search = instantsearch({
+                        appId: "@applicationId",
+                        apiKey: "@searchOnlyApiKey",
+                        indexName: "@indexName",
+                        searchFunction: function (helper) {
+                            var searchResults = $("#" + "@hitsWidgetId");
+                            var paginationWidgetContainer = $("#" + "@paginationWidgetContainerId");
+                            if (helper.state.query === "") {
+                                searchResults.hide();
+                                paginationWidgetContainer.hide();
+                                return;
+                            }
+                            helper.search();
+                            searchResults.show();
+                            paginationWidgetContainer.show();
+                        }
+                    });
+
+                    search.addWidget(
+                      instantsearch.widgets.searchBox({
+                          container: "#@searchBoxWidgetId",
+                          placeholder: "@T("Search here...")"
+                      })
+                    );
+
+                    search.templatesConfig.helpers.displayTruncatedBody = function () {
+                        if (typeof (this.body) !== "undefined")
+                            return this.body.substring(0, 50);
+
+                        return "";
+                    };
+
+                    search.addWidget(
+                      instantsearch.widgets.hits({
+                          container: "#" + "@hitsWidgetId",
+                          templates: {
+                              // This is purposely a backtick so the template can be multi line.
+                              item: `@Display(New.Algolia_SearchHit_Template())`
+                          }
+                      })
+                    );
+
+                    search.addWidget(
+                      instantsearch.widgets.pagination({
+                          container: "#@paginationWidgetId"
+                      })
+                    );
+
+                    search.start();
+                });
+            })(jQuery);
+        </script>
+    }
+}

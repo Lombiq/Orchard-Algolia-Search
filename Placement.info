@@ -1,0 +1,5 @@
+﻿<Placement>
+    <Match ContentType="Site">
+        <Place Parts_AlgoliaSearchSettings_Edit = "Content: 1@AlgoliaSearchSettings" />
+    </Match>
+</Placement>
