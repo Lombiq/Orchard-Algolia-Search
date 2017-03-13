@@ -142,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Drivers\AlgoliaSearchSettingsPartDriver.cs" />
+    <Compile Include="Extensions\SiteServiceExtensions.cs" />
     <Compile Include="Filters\IndexSettingsActionFilter.cs" />
     <Compile Include="Handlers\AlgoliaSearchSettingsPartHandler.cs" />
     <Compile Include="Handlers\DisplayUrlIndexingHandler.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="Services\AlgoliaSearchBuilder.cs" />
     <Compile Include="Services\AssemblyRedirectSetupShellEventHandler.cs" />
     <Compile Include="Services\IAlgoliaManager.cs" />
+    <Compile Include="Services\SettingsNotSetUpBanner.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\instantsearch-preact.js" />

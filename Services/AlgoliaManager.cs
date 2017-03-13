@@ -59,7 +59,7 @@ namespace Lombiq.Hosting.AlgoliaSearch.Services
 
         private AlgoliaSearchSettingsPart GetAlgoliaSearchSiteSettings()
         {
-            return _siteService.GetSiteSettings().As<AlgoliaSearchSettingsPart>();
+            return _siteService.GetAlgoliaSearchSiteSettings();
         }
     }
 }
