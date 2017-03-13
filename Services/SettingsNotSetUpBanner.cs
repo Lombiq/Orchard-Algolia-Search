@@ -34,7 +34,7 @@ namespace Lombiq.Hosting.AlgoliaSearch.Services
                 var url = _urlHelper.Action("Index", "Admin", new { Area = "Settings", GroupInfoId = "AlgoliaSearchSettings" });
                 yield return new NotifyEntry
                 {
-                    Message = T("You need to configure <a href=\"{0}\">Algolia Search settings, otherwise search won't work.</a>", url),
+                    Message = T("You need to configure <a href=\"{0}\">Algolia Search settings</a>, otherwise search won't work.", url),
                     Type = NotifyType.Warning
                 };
             }
