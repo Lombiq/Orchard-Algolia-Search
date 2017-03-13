@@ -2,9 +2,9 @@
 
 
 
-This module integrates [Algolia](https://www.algolia.com/) with the existing indexing and search features of [Orchard CMS](http://orchardproject.net/).
+This module integrates [Algolia](https://www.algolia.com/) with the existing indexing and search features of [Orchard CMS](http://orchardproject.net/). If you don't have an account already then [click here to register](https://www.algolia.com/users/sign_up?utm_source=lombiq) and start using Algolia search in Orchard.
 
-Hosting - Algolia Search is part of the [Hosting Suite](https://dotnest.com/knowledge-base/topics/lombiq-hosting-suite), which is a complete Orchard DevOps technology suite for building and maintaining scalable Orchard applications.
+Hosting - Algolia Search is part of the [Hosting Suite](https://dotnest.com/knowledge-base/topics/lombiq-hosting-suite), which is a complete Orchard DevOps technology suite for building and maintaining scalable Orchard applications. The module is also available for [DotNest](https://dotnest.com/) sites.
 
 The module was created by [Lombiq](https://lombiq.com), one of the core developers of Orchard itself.
 

@@ -8,20 +8,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Orchard.Environment;
 
 namespace Lombiq.Hosting.AlgoliaSearch.Services
 {
     public class AlgoliaIndexProvider : IIndexProvider
     {
-        private readonly IAlgoliaManager _algoliaManager;
+        private readonly Work<IAlgoliaManager> _algoliaManagerWork;
 
         public ILogger Logger { get; set; }
         public Localizer T { get; set; }
 
 
-        public AlgoliaIndexProvider(IAlgoliaManager algoliaManager)
+        public AlgoliaIndexProvider(Work<IAlgoliaManager> algoliaManagerWork)
         {
-            _algoliaManager = algoliaManager;
+            _algoliaManagerWork = algoliaManagerWork;
 
             Logger = NullLogger.Instance;
             T = NullLocalizer.Instance;
@@ -30,14 +31,14 @@ namespace Lombiq.Hosting.AlgoliaSearch.Services
 
         public void CreateIndex(string name)
         {
-            var index = _algoliaManager.GetIndex(name);
+            var index = _algoliaManagerWork.Value.GetIndex(name);
             var result = index.SetSettingsAsync(new JObject()).Result;
             index.WaitTask(result["taskID"].ToString());
         }
 
         public ISearchBuilder CreateSearchBuilder(string indexName)
         {
-            return new AlgoliaSearchBuilder(indexName, _algoliaManager);
+            return new AlgoliaSearchBuilder(indexName, _algoliaManagerWork);
         }
 
         public void Delete(string indexName, IEnumerable<int> documentIds)
@@ -47,7 +48,7 @@ namespace Lombiq.Hosting.AlgoliaSearch.Services
                 return;
             }
 
-            _algoliaManager.GetIndex(indexName).DeleteObjects(documentIds.Select(id => id.ToString()));
+            _algoliaManagerWork.Value.GetIndex(indexName).DeleteObjects(documentIds.Select(id => id.ToString()));
         }
 
         public void Delete(string indexName, int documentId)
@@ -57,8 +58,8 @@ namespace Lombiq.Hosting.AlgoliaSearch.Services
 
         public void DeleteIndex(string name)
         {
-            var index = _algoliaManager.GetIndex(name);
-            var result = _algoliaManager.DeleteIndex(name);
+            var index = _algoliaManagerWork.Value.GetIndex(name);
+            var result = _algoliaManagerWork.Value.DeleteIndex(name);
             index.WaitTask(result["taskID"].ToString());
         }
 
@@ -76,7 +77,7 @@ namespace Lombiq.Hosting.AlgoliaSearch.Services
         public bool IsEmpty(string indexName)
         {
             int hitsCount;
-            if (int.TryParse((string)_algoliaManager.GetIndex(indexName).Search(new Query(""))["nbHits"], out hitsCount))
+            if (int.TryParse((string)_algoliaManagerWork.Value.GetIndex(indexName).Search(new Query(""))["nbHits"], out hitsCount))
             {
                 return hitsCount == 0;
             }
@@ -86,7 +87,7 @@ namespace Lombiq.Hosting.AlgoliaSearch.Services
 
         public IEnumerable<string> List()
         {
-            return _algoliaManager.ListIndexes()["items"].Children().Select(c => (string)c["name"]);
+            return _algoliaManagerWork.Value.ListIndexes()["items"].Children().Select(c => (string)c["name"]);
         }
 
         public IDocumentIndex New(int documentId)
@@ -96,7 +97,7 @@ namespace Lombiq.Hosting.AlgoliaSearch.Services
 
         public int NumDocs(string indexName)
         {
-            return _algoliaManager.GetIndex(indexName).BrowseAll(new Query("")).Count();
+            return _algoliaManagerWork.Value.GetIndex(indexName).BrowseAll(new Query("")).Count();
         }
 
         public void Store(string indexName, IDocumentIndex indexDocument)
@@ -124,7 +125,7 @@ namespace Lombiq.Hosting.AlgoliaSearch.Services
                 createdDocuments.Add(CreateDocument(indexDocument));
             }
 
-            _algoliaManager.GetIndex(indexName).AddObjects(createdDocuments);
+            _algoliaManagerWork.Value.GetIndex(indexName).AddObjects(createdDocuments);
             Logger.Debug("Documents [{0}] indexed", string.Join(", ", indexDocuments.Select(document => document.ContentItemId)));
         }
 

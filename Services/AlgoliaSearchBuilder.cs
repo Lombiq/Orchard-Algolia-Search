@@ -9,12 +9,13 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Web;
+using Orchard.Environment;
 
 namespace Lombiq.Hosting.AlgoliaSearch.Services
 {
     public class AlgoliaSearchBuilder : ISearchBuilder
     {
-        private readonly IAlgoliaManager _algoliaManager;
+        private readonly Work<IAlgoliaManager> _algoliaManagerWork;
 
         private string _indexName;
         private Query _query;
@@ -27,9 +28,9 @@ namespace Lombiq.Hosting.AlgoliaSearch.Services
         public ILogger Logger { get; set; }
 
 
-        public AlgoliaSearchBuilder(string indexName, IAlgoliaManager algoliaManager)
+        public AlgoliaSearchBuilder(string indexName, Work<IAlgoliaManager> algoliaManagerWork)
         {
-            _algoliaManager = algoliaManager;
+            _algoliaManagerWork = algoliaManagerWork;
             _indexName = indexName;
             _query = new Query();
             _skip = 0;
@@ -56,7 +57,7 @@ namespace Lombiq.Hosting.AlgoliaSearch.Services
             CreateQuery();
 
             int hitsCount;
-            if (int.TryParse((string)_algoliaManager.GetIndex(_indexName).Search(_query)["nbHits"], out hitsCount))
+            if (int.TryParse((string)_algoliaManagerWork.Value.GetIndex(_indexName).Search(_query)["nbHits"], out hitsCount))
             {
                 return hitsCount > 1000 ? 1000 : hitsCount;
             }
@@ -76,7 +77,7 @@ namespace Lombiq.Hosting.AlgoliaSearch.Services
 
         public ISearchHit Get(int documentId)
         {
-            return new AlgoliaSearchHit(_algoliaManager.GetIndex(_indexName).GetObject(documentId.ToString()));
+            return new AlgoliaSearchHit(_algoliaManagerWork.Value.GetIndex(_indexName).GetObject(documentId.ToString()));
         }
 
         public ISearchBits GetBits()
@@ -117,7 +118,7 @@ namespace Lombiq.Hosting.AlgoliaSearch.Services
 
             Logger.Debug("Searching: {0}", _query.GetQueryString());
 
-            var result = _algoliaManager.GetIndex(_indexName).Search(_query);
+            var result = _algoliaManagerWork.Value.GetIndex(_indexName).Search(_query);
 
             Logger.Debug("Search results: {0}", result["nbHits"]);
 
