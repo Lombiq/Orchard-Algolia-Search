@@ -87,7 +87,14 @@ namespace Lombiq.Hosting.AlgoliaSearch.Services
 
         public IEnumerable<string> List()
         {
-            return _algoliaManagerWork.Value.ListIndexes()["items"].Children().Select(c => (string)c["name"]);
+            if (!string.IsNullOrEmpty(_algoliaManagerWork.Value.GetApplicationId()))
+            {
+                return _algoliaManagerWork.Value.ListIndexes()["items"].Children().Select(c => (string)c["name"]); 
+            }
+            else
+            {
+                return Enumerable.Empty<string>();
+            }
         }
 
         public IDocumentIndex New(int documentId)
