@@ -13,11 +13,11 @@ namespace Lombiq.Hosting.AlgoliaSearch
             var manifest = builder.Add();
 
             manifest
-                .DefineScript("InstantSearch")
+                .DefineScript("Algolia.InstantSearch")
                 .SetUrl("instantsearch-preact.js", "instantsearch-preact.min.js")
                 .SetDependencies("jQuery");
 
-            manifest.DefineStyle("InstantSearch").SetUrl("instantsearch.css");
+            manifest.DefineStyle("Algolia.InstantSearch").SetUrl("instantsearch.css");
         }
     }
 }

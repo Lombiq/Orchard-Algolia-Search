@@ -3,8 +3,8 @@
 @using Orchard.ContentManagement
 
 @{
-    Style.Require("InstantSearch");
-    Script.Require("InstantSearch");
+    Style.Require("Algolia.InstantSearch");
+    Script.Require("Algolia.InstantSearch");
 
     var searchSettings = WorkContext.CurrentSite.As<SearchSettingsPart>();
     var searchFormPart = (SearchFormPart)Model.ContentPart;
