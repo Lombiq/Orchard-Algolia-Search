@@ -60,9 +60,20 @@
                       })
                     );
 
-                    search.templatesConfig.helpers.displayTruncatedBody = function () {
-                        if (typeof (this.body) !== "undefined")
-                            return this.body.substring(0, 50);
+                    search.templatesConfig.helpers.displayTruncatedHighlightedBody = function () {
+                        if (typeof (this.body) !== "undefined") {
+                            var body = this._highlightResult["body"].value;
+                            var maxIndex = 149;
+                            var truncateOnIndex = maxIndex;
+                            var emphasisStartIndex = body.indexOf("<em>");
+                            var emphasisEndIndex = body.indexOf("</em>");
+
+                            if (emphasisStartIndex < maxIndex && emphasisEndIndex > maxIndex) {
+                                truncateOnIndex = emphasisEndIndex + 6;
+                            }
+
+                            return truncateOnWordBoundary(body, truncateOnIndex);
+                        }
 
                         return "";
                     };
@@ -85,6 +96,15 @@
 
                     search.start();
                 });
+
+                function truncateOnWordBoundary(text, maxIndex) {
+                    if (text.length > maxIndex + 1) {
+                        text = text.substring(0, maxIndex);
+                        text = text.substring(0, Math.min(text.length, text.lastIndexOf(" ")));
+                        text = text + "...";
+                    }
+                    return text;
+                }
             })(jQuery);
         </script>
     }
