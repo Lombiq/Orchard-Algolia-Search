@@ -1,10 +1,10 @@
 ﻿{{#displayUrl}}
     {{#title}}
-        <a href="{{displayUrl}}">{{title}}</a>
+        <a href="{{displayUrl}}">{{{_highlightResult.title.value}}}</a>
     {{/title}}
 {{/displayUrl}}
 {{#body}}
-    <div>{{#helpers.displayTruncatedBody}}{{/helpers.displayTruncatedBody}}</div>
+    <div>{{#helpers.displayTruncatedHighlightedBody}}{{/helpers.displayTruncatedHighlightedBody}}</div>
 {{/body}}
 {{#imageUrl}}
     <img src="{{imageUrl}}" />
