@@ -2,7 +2,7 @@
 
 
 
-This module integrates [Algolia](https://www.algolia.com/) with the existing indexing and search features of [Orchard CMS](http://orchardproject.net/). If you don't have an account already then [click here to register](https://www.algolia.com/users/sign_up?utm_source=lombiq) and start using Algolia search in Orchard. If you want to just check out how such the modules works from the frontend, see the [Orchard Algolia Search Demo site](https://algoliasearchdemo.dotnest.com) on DotNest.
+This module integrates [Algolia](https://www.algolia.com/) with the existing indexing and search features of [Orchard CMS](http://orchardproject.net/). If you don't have an account already then [click here to register](https://www.algolia.com/users/sign_up?utm_source=lombiq) and start using Algolia search in Orchard. If you want to just check out how the module works from the frontend, see the [Orchard Algolia Search Demo site](https://algoliasearchdemo.dotnest.com) on DotNest.
 
 Hosting - Algolia Search is part of the [Hosting Suite](https://dotnest.com/knowledge-base/topics/lombiq-hosting-suite), which is a complete Orchard DevOps technology suite for building and maintaining scalable Orchard applications. The module is also available for [DotNest](https://dotnest.com/) sites.
 
@@ -28,7 +28,7 @@ The module was created by [Lombiq](https://lombiq.com), one of the core develope
 ## Search on the frontend
 
 - It uses [InstantSearch.js](https://community.algolia.com/instantsearch.js/).
-- Override *Search.SearchForm.cshtml* if you want a complete different UI.
+- Override *Search.SearchForm.cshtml* if you want a completely different UI.
 - Override *Algolia.Searchit.Template.cshtml* if you just want to display hits differently. Note that when you override this template you have to use the [Mustache](https://mustache.github.io/) syntax.
 
 
