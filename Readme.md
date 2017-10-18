@@ -8,7 +8,12 @@ Hosting - Algolia Search is part of the [Hosting Suite](https://dotnest.com/know
 
 The module deliberately doesn't provide any styling for the search feature apart from what's already there in the Algolia SDK. You need to style it and configure its capabilities adapted to the site that you're using it on; this can be easily done, see below.
 
-The module was created by [Lombiq](https://lombiq.com), one of the core developers of Orchard itself.
+The module's source is available in two public source repositories, automatically mirrored in both directions with [Git-hg Mirror](https://githgmirror.com):
+
+- [https://bitbucket.org/Lombiq/hosting-algolia-search](https://bitbucket.org/Lombiq/hosting-algolia-search) (Mercurial repository)
+- [https://github.com/Lombiq/Orchard-Algolia-Search](https://github.com/Lombiq/Orchard-Algolia-Search) (Git repository)
+
+This project is developed by [Lombiq Technologies Ltd](http://lombiq.com/), one of the core developers of Orchard itself. Commercial-grade support is available through Lombiq.
 
 
 ## Configuration
